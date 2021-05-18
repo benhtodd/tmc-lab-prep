@@ -7,6 +7,8 @@
  
 ### Hard coded variables ###
 clusterNameBase="csuser"
+provisioner="observability"
+management="livefire-cs-sv01"
 #clusterNameBase="realylongnameherenow"
 clusterGroupName="default"
 k8sVersion="v1.18.15+vmware.1-tkg.1.600e412"
@@ -39,11 +41,11 @@ fi
 for clusterNum in $(seq -w $num $max)
 do
         clusterNameA="$clusterNameBase-$clusterNum$numA"
-        tmc cluster create -t tkgs -n $clusterNameA -g $clusterGroupName --allowed-storage-classes vsphere-with-kubernetes --version $k8sVersion --storage-class vsphere-with-kubernetes --management-cluster-name livefire-cs-sv01 --provisioner-name capacity-test --worker-instance-type best-effort-xlarge --instance-type best-effort-small -q 1
+        tmc cluster create -t tkgs -n $clusterNameA -g $clusterGroupName --allowed-storage-classes vsphere-with-kubernetes --version $k8sVersion --storage-class vsphere-with-kubernetes --management-cluster-name $management --provisioner-name $provisioner --worker-instance-type best-effort-xlarge --instance-type best-effort-small -q 1
         echo "$clusterNameA is provisioning..."
 
         clusterNameB="$clusterNameBase-$clusterNum$numB"
-        tmc cluster create -t tkgs -n $clusterNameB -g $clusterGroupName --allowed-storage-classes vsphere-with-kubernetes --version $k8sVersion --storage-class vsphere-with-kubernetes --management-cluster-name livefire-cs-sv01 --provisioner-name capacity-test --worker-instance-type best-effort-xlarge --instance-type best-effort-small -q 1
+        tmc cluster create -t tkgs -n $clusterNameB -g $clusterGroupName --allowed-storage-classes vsphere-with-kubernetes --version $k8sVersion --storage-class vsphere-with-kubernetes --management-cluster-name $management --provisioner-name $provisioner --worker-instance-type best-effort-xlarge --instance-type best-effort-small -q 1
         echo "$clusterNameB is provisioning..."
 done
  
